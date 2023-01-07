@@ -1,8 +1,31 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner'
+import { createTicket, reset } from '../features/tickets/TticketSlice'
 
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth)
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.ticket
+  )
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess) {
+      dispatch(reset())
+      navigate('/tickets')
+    }
+
+    dispatch(reset())
+  }, [dispatch, isError, isSuccess, message, navigate])
+
   const [name, setName] = useState(user.name)
   const [email, setemail] = useState(user.email)
   const [product, setproduct] = useState('iPhone')
@@ -10,6 +33,11 @@ const NewTicket = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    dispatch(createTicket({ product, description }))
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return (
