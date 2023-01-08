@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
-import { createTicket, reset } from '../features/tickets/TticketSlice'
+import { createTicket, reset } from '../features/tickets/ticketSlice'
 
 const NewTicket = () => {
   const { user } = useSelector((state) => state.auth)

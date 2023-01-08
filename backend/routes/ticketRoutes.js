@@ -3,14 +3,14 @@ const router = express.Router()
 const {
   getTickets,
   getTicket,
-  createTickets,
+  createTicket,
   deleteTicket,
   updateTicket,
 } = require('../controllers/ticketController')
 
 const { protect } = require('../middleware/authMiddleware')
 
-router.route('/').get(protect, getTickets).post(protect, createTickets)
+router.route('/').get(protect, getTickets).post(protect, createTicket)
 
 router
   .route('/:id')
