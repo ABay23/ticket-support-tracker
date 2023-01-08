@@ -7,7 +7,7 @@ const API_URL = '/api/tickets/'
 const createTicket = async (ticketData, token) => {
   const config = {
     headers: {
-      Autorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }
 
@@ -16,8 +16,38 @@ const createTicket = async (ticketData, token) => {
   return response.data
 }
 
+// GEt user Tickets
+
+const getTickets = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL, config)
+
+  return response.data
+}
+
+// GEt user Ticket
+
+const getTicket = async (ticketId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL + ticketId, config)
+
+  return response.data
+}
+
 const ticketService = {
   createTicket,
+  getTickets,
+  getTicket,
 }
 
 export default ticketService
